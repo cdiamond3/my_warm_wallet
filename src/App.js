@@ -1,25 +1,46 @@
-import logo from './logo.svg';
+import { Component } from 'react';
 import './App.css';
+import SearchCoinsForm from "./Components/SearchCoinsForm"
+import CoinsCardContainer from "./Containers/CoinCardContainers"
+const coinUrl = "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=100&page=1&sparkline=false&price_change_percentage=1H"
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+export default class App extends Component {
+
+  state = {
+    allCoins: [],
+    filteredCoins: [],
+    submitInput: [],
+    userInput: "",
+  }
+
+  componentDidMount() {
+    fetch(coinUrl)
+    .then(res => res.json())
+    .then(data => {
+      console.log(data)
+      this.setState({ allCoins: data})
+      this.setState({filteredCoins: data})
+    })
+  }
+  
+  filterCoins = (event) => {
+    const filterCoins = this.state.allCoins 
+    .filter(
+      coin => (
+        coin.name.toLowerCase().includes(event.target.value.toLowerCase())
+        )
+        )
+        this.setState({filteredCoins: filterCoins})
+      }
+      
+
+
+  render() {
+    return (
+      <div>
+        <h1>My Warm Wallet!</h1>
+        <CoinsCardContainer coinData={this.state.allCoins} filterCoins={this.filterCoins}/>
+      </div>
+    )
+  }
 }
-
-export default App;
