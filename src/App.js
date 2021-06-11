@@ -11,6 +11,7 @@ export default class App extends Component {
     filteredCoins: [],
     submitInput: [],
     userInput: "",
+    likeCount: 0
   }
 
   componentDidMount() {
@@ -32,6 +33,17 @@ export default class App extends Component {
         )
         this.setState({filteredCoins: filterCoins})
       }
+
+      incrementLike = () => {
+        this.setState({
+          likeCount: this.state.likeCount + 1
+        })
+      }
+      decrmentLike = () => {
+        this.setState({
+          likeCount: this.state.likeCount - 1
+        })
+      }
       
 
 
@@ -39,7 +51,13 @@ export default class App extends Component {
     return (
       <div>
         <h1>My Warm Wallet!</h1>
-        <CoinsCardContainer coinData={this.state.allCoins} filterCoins={this.filterCoins}/>
+        <CoinsCardContainer 
+        coinData={this.state.allCoins} 
+        filterCoins={this.filterCoins} 
+        handleIncrement={this.incrementLike} 
+        handleDecrement={this.decrmentLike}
+        likes={this.state.likeCount}
+        />
       </div>
     )
   }

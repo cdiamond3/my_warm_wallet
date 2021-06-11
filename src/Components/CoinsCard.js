@@ -1,9 +1,9 @@
 import InputForm from "./InputForm"
 import React from 'react'
-import { Card, Image } from 'semantic-ui-react'
+import { Card, Image, Button } from 'semantic-ui-react'
 
 
-export default function cards({ coin }) {
+export default function cards({ coin, likes, increment }) {
 
     return (
         <section>
@@ -18,8 +18,9 @@ export default function cards({ coin }) {
                                     24 Hour High: ${coin.high_24h}
                                     <br></br>
                                     24 Hour Low: ${coin.low_24h}
+                                    <br></br>
                                 </Card.Description>
-                        <h3><InputForm /></h3>
+                                <h3><InputForm /></h3> <Button onClick={() => increment()}>likes:{likes}</Button>
                             </Card.Content>
                         </Card>
                     </Card.Group>
